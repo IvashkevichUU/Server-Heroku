@@ -28,6 +28,14 @@ func repeatFunc(c *gin.Context) {
 	c.String(http.StatusOK, buffer.String())
 }
 
+func createdb(c *gin.Context) {
+	if _, err := db.Exec("CREATE TABLE IF NOT EXISTS students (id SERIALIZABLE NOT NULL, fio CHARACTER VARYING 300 NOT NULL, info TEXT NOT NULL, score INTEGER NOT NULL )"); err != nil {
+		c.String(http.StatusInternalServerError,
+			fmt.Sprintf("Error creating database table: %q", err))
+		return
+	}
+}
+
 func dbFunc(c *gin.Context) {
 	if _, err := db.Exec("CREATE TABLE IF NOT EXISTS ticks (tick timestamp)"); err != nil {
 		c.String(http.StatusInternalServerError,
@@ -95,6 +103,8 @@ func main() {
 
 	router.GET("/repeat", repeatFunc)
 	router.GET("/db", dbFunc)
+
+	router.GET("/students", createdb)
 
 	router.Run(":" + port)
 }
