@@ -151,6 +151,14 @@ func main() {
 
 	router.GET("/studentid", PrintByID)
 
+	http.HandleFunc("/forma", func(w http.ResponseWriter, r *http.Request) {
+
+
+
+			w.Write([]byte(loginFormTmpl))
+
+
+	})
 
 	http.HandleFunc("/get_student", func(w http.ResponseWriter, r *http.Request) {
 		r.ParseForm()
