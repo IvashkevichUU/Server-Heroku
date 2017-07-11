@@ -43,15 +43,15 @@ func createdb(c *gin.Context) {
 
 // PrintByID print student by id
 func PrintByID(c *gin.Context) {
-	var fio string
-	var info sql.NullString
-	// var info string
-	var score int
-	row := db.QueryRow("SELECT fio, info, score FROM students WHERE id = $1", 1)
-	// fmt.Println(row)
-	err := row.Scan(&fio, &info, &score)
+	rows, err := db.Query("SELECT fio FROM students")
 	PanicOnErr(err)
-	fmt.Sprintf("PrintByID:", 1, "fio:", fio, "info:", info, "score:", score)
+	for rows.Next() {
+		var fio string
+		err = rows.Scan(&fio)
+		PanicOnErr(err)
+		fmt.Sprintf("rows.Next fio: ", fio)
+	}
+	rows.Close()
 }
 
 func dbFunc(c *gin.Context) {
