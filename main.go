@@ -23,7 +23,7 @@ var (
 func repeatFunc(c *gin.Context) {
 	var buffer bytes.Buffer
 	for i := 0; i < repeat; i++ {
-		buffer.WriteString("Hello from Go !")
+		buffer.WriteString("Hello from Go блеа!")
 	}
 	c.String(http.StatusOK, buffer.String())
 }
