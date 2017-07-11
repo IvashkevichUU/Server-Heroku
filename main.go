@@ -52,7 +52,7 @@ func PrintByID(c *gin.Context) {
 
 	defer rows.Close()
 	for rows.Next() {
-		var tick time.Time
+		var tick string
 		if err := rows.Scan(&tick); err != nil {
 			c.String(http.StatusInternalServerError,
 				fmt.Sprintf("Error scanning students: %q", err))
