@@ -44,14 +44,22 @@ func createdb(c *gin.Context) {
 // PrintByID print student by id
 func PrintByID(c *gin.Context) {
 	rows, err := db.Query("SELECT fio FROM students")
-	PanicOnErr(err)
-	for rows.Next() {
-		var fio string
-		err = rows.Scan(&fio)
-		PanicOnErr(err)
-		fmt.Sprintf("rows.Next fio: ", fio)
+	if err != nil {
+		c.String(http.StatusInternalServerError,
+			fmt.Sprintf("Error reading students: %q", err))
+		return
 	}
-	rows.Close()
+
+	defer rows.Close()
+	for rows.Next() {
+		var tick time.Time
+		if err := rows.Scan(&tick); err != nil {
+			c.String(http.StatusInternalServerError,
+				fmt.Sprintf("Error scanning students: %q", err))
+			return
+		}
+		c.String(http.StatusOK, fmt.Sprintf("Read from DB: %s\n", tick.String()))
+	}
 }
 
 func dbFunc(c *gin.Context) {
