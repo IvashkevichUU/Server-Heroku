@@ -34,7 +34,7 @@ func createdb(c *gin.Context) {
 			fmt.Sprintf("Error creating database table: %q", err))
 		return
 	}
-	if _, err := db.Exec("INSERT INTO students (fio, info, score) VALUES ('Vasily Romanov', 'company: Mail.ru Group', '10')"); err != nil {
+	if _, err := db.Exec("INSERT INTO students (fio, info, score) VALUES ('Ivan Ivanov', 'company: Mail.ru Group', '100')"); err != nil {
 		c.String(http.StatusInternalServerError,
 			fmt.Sprintf("Error incrementing tick: %q", err))
 		return
@@ -55,14 +55,14 @@ func PrintByID(c *gin.Context) {
 		var id int
 		var fio string
 		var info string
-		var score int
+		var score uint
 
 		if err := rows.Scan(&id, &fio, &info, &score); err != nil {
 			c.String(http.StatusInternalServerError,
 				fmt.Sprintf("Error scanning students: %q", err))
 			return
 		}
-		c.String(http.StatusOK, fmt.Sprintf("Read from DB: id %d fio %s info %s score %s\n", id, fio, info, score))
+		c.String(http.StatusOK, fmt.Sprintf("Read from DB: id %d fio %s info %s score %d\n", id, fio, info, score))
 	}
 }
 
