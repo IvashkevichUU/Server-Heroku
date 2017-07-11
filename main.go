@@ -41,6 +41,18 @@ func createdb(c *gin.Context) {
 	}
 }
 
+// PrintByID print student by id
+func PrintByID(id int64) {
+	var fio string
+	var info sql.NullString
+	// var info string
+	var score int
+	row := db.QueryRow("SELECT fio, info, score FROM students WHERE id = $1", id)
+	// fmt.Println(row)
+	err := row.Scan(&fio, &info, &score)
+	PanicOnErr(err)
+	fmt.Println("PrintByID:", id, "fio:", fio, "info:", info, "score:", score)
+}
 
 func dbFunc(c *gin.Context) {
 	if _, err := db.Exec("CREATE TABLE IF NOT EXISTS ticks (tick timestamp)"); err != nil {
@@ -112,7 +124,15 @@ func main() {
 
 	router.GET("/students", createdb)
 
+	router.GET("/studentid", PrintByID(1))
+
 	router.Run(":" + port)
+}
+
+func PanicOnErr(err error) {
+	if err != nil {
+		panic(err)
+	}
 }
 
 
