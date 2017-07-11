@@ -58,7 +58,7 @@ func PrintByID(c *gin.Context) {
 				fmt.Sprintf("Error scanning students: %q", err))
 			return
 		}
-		c.String(http.StatusOK, fmt.Sprintf("Read from DB: %s\n", tick.String()))
+		c.String(http.StatusOK, fmt.Sprintf("Read from DB: %s\n", tick))
 	}
 }
 
