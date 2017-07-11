@@ -33,6 +33,16 @@ var loginFormTmpl = `
 </html>
 `
 
+func Forma(c *gin.Context) {
+
+
+
+	fmt.Sprint([]byte(loginFormTmpl))
+
+
+
+}
+
 func repeatFunc(c *gin.Context) {
 	var buffer bytes.Buffer
 	for i := 0; i < repeat; i++ {
@@ -151,14 +161,7 @@ func main() {
 
 	router.GET("/studentid", PrintByID)
 
-	http.HandleFunc("/forma", func(w http.ResponseWriter, r *http.Request) {
-
-
-
-			w.Write([]byte(loginFormTmpl))
-
-
-	})
+	router.GET("/forma", Forma)
 
 	http.HandleFunc("/get_student", func(w http.ResponseWriter, r *http.Request) {
 		r.ParseForm()
