@@ -34,7 +34,15 @@ func createdb(c *gin.Context) {
 			fmt.Sprintf("Error creating database table: %q", err))
 		return
 	}
+
+
+	if _, err := db.Exec("INSERT INTO students (fio, info, score) VALUES ('Vasily Romanov', 'company: Mail.ru Group', '10')"); err != nil {
+		c.String(http.StatusInternalServerError,
+			fmt.Sprintf("Error incrementing tick: %q", err))
+		return
+	}
 }
+
 
 func dbFunc(c *gin.Context) {
 	if _, err := db.Exec("CREATE TABLE IF NOT EXISTS ticks (tick timestamp)"); err != nil {
