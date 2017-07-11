@@ -20,6 +20,19 @@ var (
 	db     *sql.DB
 )
 
+var loginFormTmpl = `
+<html>
+	<body>
+	<form action="/get_student" method="post">
+		FIO: <input type="text" name="fio">
+		Info: <input type="text" name="info">
+		Score: <input type="text" name="score">
+		<input type="submit" value="Add student">
+	</form>
+	</body>
+</html>
+`
+
 func repeatFunc(c *gin.Context) {
 	var buffer bytes.Buffer
 	for i := 0; i < repeat; i++ {
@@ -137,6 +150,27 @@ func main() {
 	router.GET("/students", createdb)
 
 	router.GET("/studentid", PrintByID)
+
+
+	http.HandleFunc("/get_student", func(w http.ResponseWriter, r *http.Request) {
+		r.ParseForm()
+		inputFio := r.Form["fio"][0]
+		inputInfo := r.Form["info"][0]
+		inputScore := r.Form["score"][0]
+		var c *gin.Context
+
+		if _, err := db.Exec("INSERT INTO students (fio, info, score) VALUES ($1, $2, $3)",
+			inputFio,
+			inputInfo,
+			inputScore,
+		); err != nil {
+			c.String(http.StatusInternalServerError,
+				fmt.Sprintf("Error incrementing tick: %q", err))
+			return
+		}
+
+		http.Redirect(w, r, "/studentid", http.StatusFound)
+	})
 
 	router.Run(":" + port)
 }
