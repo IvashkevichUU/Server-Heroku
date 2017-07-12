@@ -58,7 +58,7 @@ func insertStudent(r *gin.Context) {
 			return
 		}
 
-	r.Redirect(http.StatusOK, "/studentid")
+	defer r.Redirect(http.StatusMovedPermanently, "/studentid")
 }
 
 func repeatFunc(c *gin.Context) {
