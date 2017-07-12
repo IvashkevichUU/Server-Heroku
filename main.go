@@ -21,7 +21,18 @@ var (
 	db     *sql.DB
 )
 
-var loginFormTmpl = "</pre>	<form action=\"/get_student\" method=\"post\">	FIO: <input type=\"text\" name=\"fio\">	Info: <input type=\"text\" name=\"info\">Score: <input type=\"text\" name=\"score\"><input type=\"submit\" value=\"Add student\"></form>"
+var loginFormTmpl = `
+<html>
+	<body>
+	<form action="/get_student" method="post">
+		FIO: <input type="text" name="fio">
+		Info: <input type="text" name="info">
+		Score: <input type="text" name="score">
+		<input type="submit" value="Add student">
+	</form>
+	</body>
+</html>
+`
 
 func Forma(c *gin.Context) {
 
