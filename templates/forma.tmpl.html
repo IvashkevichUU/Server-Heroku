@@ -7,10 +7,19 @@
 
     <div class="alert alert-info text-center">
         <form action="/get_student" method="post">
-            FIO: <input type="text" name="fio">
-            Info: <input type="text" name="info">
-            Score: <input type="text" name="score">
-            <input type="submit" value="Add student">
+            <div class="form-group">
+                <label for="inputFio">FIO:</label>
+                <input type="text" class="form-control" id="inputFio" name="fio" placeholder="Введите ФИО">
+            </div>
+            <div class="form-group">
+                <label for="inputInfo">Info:</label>
+                <input type="text" class="form-control" id="inputInfo" name="info" placeholder="Введите инфу">
+            </div>
+            <div class="form-group">
+                <label for="inputScore">FIO:</label>
+                <input type="text" class="form-control" id="inputScore" name="score" placeholder="Введите результат">
+            </div>
+            <button class="btn btn-default" type="submit">Add student</button>
         </form>
     </div>
 </div>
