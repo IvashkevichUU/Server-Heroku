@@ -13,6 +13,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/russross/blackfriday"
 	_ "github.com/lib/pq"
+
+	"mime/multipart"
 )
 
 var (
@@ -37,7 +39,7 @@ func Forma(c *gin.Context) {
 
 
 
-	fmt.Sprint([]byte(loginFormTmpl))
+	fmt.Sprintf(loginFormTmpl)
 
 
 
