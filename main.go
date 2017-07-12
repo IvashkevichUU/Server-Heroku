@@ -14,7 +14,6 @@ import (
 	"github.com/russross/blackfriday"
 	_ "github.com/lib/pq"
 
-	"mime/multipart"
 )
 
 var (
