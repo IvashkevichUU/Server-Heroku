@@ -36,10 +36,26 @@ var loginFormTmpl = `
 
 func Forma(c *gin.Context) {
 
+		c.String(http.StatusOK, string(blackfriday.MarkdownBasic([]byte(loginFormTmpl))))
 
-	c.String(http.StatusInternalServerError,
-	fmt.Sprintf(loginFormTmpl))
+}
 
+func insertStudent(r *gin.Context) {
+
+		r.Request.ParseForm()
+		inputFio := r.Request.Form["fio"][0]
+		inputInfo := r.Request.Form["info"][0]
+		inputScore := r.Request.Form["score"][0]
+
+
+		if _, err := db.Exec("INSERT INTO students (fio, info, score) VALUES ($1, $2, $3)",
+			inputFio,
+			inputInfo,
+			inputScore,
+		); err != nil {
+
+			return
+		}
 
 
 }
@@ -165,33 +181,11 @@ func main() {
 
 	router.GET("/forma", Forma)
 
-	http.HandleFunc("/get_student", func(w http.ResponseWriter, r *http.Request) {
-		r.ParseForm()
-		inputFio := r.Form["fio"][0]
-		inputInfo := r.Form["info"][0]
-		inputScore := r.Form["score"][0]
-		var c *gin.Context
+	router.POST("/get_student", insertStudent)
 
-		if _, err := db.Exec("INSERT INTO students (fio, info, score) VALUES ($1, $2, $3)",
-			inputFio,
-			inputInfo,
-			inputScore,
-		); err != nil {
-			c.String(http.StatusInternalServerError,
-				fmt.Sprintf("Error incrementing tick: %q", err))
-			return
-		}
 
-		http.Redirect(w, r, "/studentid", http.StatusFound)
-	})
 
 	router.Run(":" + port)
-}
-
-func PanicOnErr(err error) {
-	if err != nil {
-		panic(err)
-	}
 }
 
 
