@@ -1,0 +1,19 @@
+<html>
+{{template "header.tmpl.html"}}
+<body>
+{{template "nav.tmpl.html"}}
+
+<div class="jumbotron text-center">
+
+    <div class="alert alert-info text-center">
+        <form action="/get_student" method="post">
+            FIO: <input type="text" name="fio">
+            Info: <input type="text" name="info">
+            Score: <input type="text" name="score">
+            <input type="submit" value="Add student">
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

@@ -53,11 +53,12 @@ func insertStudent(r *gin.Context) {
 			inputInfo,
 			inputScore,
 		); err != nil {
-
+			r.String(http.StatusInternalServerError,
+				fmt.Sprintf("Error incrementing tick: %q", err))
 			return
 		}
 
-
+	r.Redirect(http.StatusOK, "/studentid")
 }
 
 func repeatFunc(c *gin.Context) {
@@ -179,7 +180,9 @@ func main() {
 
 	router.GET("/studentid", PrintByID)
 
-	router.GET("/forma", Forma)
+	router.GET("/forma", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "forma.tmpl.html", nil)
+	})
 
 	router.POST("/get_student", insertStudent)
 
