@@ -76,6 +76,7 @@ func PrintByID(c *gin.Context) {
 
 	defer rows.Close()
 	for rows.Next() {
+
 		var id int
 		var fio string
 		var info string
