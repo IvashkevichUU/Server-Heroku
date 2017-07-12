@@ -22,16 +22,13 @@ var (
 )
 
 var loginFormTmpl = `
-<html>
-	<body>
+</pre>
 	<form action="/get_student" method="post">
 		FIO: <input type="text" name="fio">
 		Info: <input type="text" name="info">
 		Score: <input type="text" name="score">
 		<input type="submit" value="Add student">
 	</form>
-	</body>
-</html>
 `
 
 func Forma(c *gin.Context) {
@@ -138,7 +135,7 @@ func main() {
 		repeat = 5
 	}
 
-	db, err = sql.Open("postgres", os.Getenv("DATABASE_URL")+" sslmode=disable")
+	db, err = sql.Open("postgres", os.Getenv("DATABASE_URL"))
 	if err != nil {
 		log.Fatalf("Error opening database: %q", err)
 	}
